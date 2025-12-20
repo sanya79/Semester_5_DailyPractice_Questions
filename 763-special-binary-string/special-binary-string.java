@@ -1,28 +1,34 @@
 import java.util.*;
+
 class Solution {
     public String makeLargestSpecial(String s) {
-        List<String> list = new ArrayList<>();
+        List<String> parts = new ArrayList<>();
         int count = 0;
         int start = 0;
+
+        // Split into primitive special substrings
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '1') {
-                count++;
-            } else {
-                count--;
-            }
+            if (s.charAt(i) == '1') count++;
+            else count--;
+
             if (count == 0) {
+                // Recursively process inner part
                 String inner = s.substring(start + 1, i);
-                String processed = makeLargestSpecial(inner);
-                list.add("1" + processed + "0");
+                String processed = "1" + makeLargestSpecial(inner) + "0";
+                parts.add(processed);
                 start = i + 1;
             }
         }
-        Collections.sort(list, Collections.reverseOrder());
 
+        // Sort in descending lexicographical order
+        Collections.sort(parts, Collections.reverseOrder());
+
+        // Combine result
         StringBuilder result = new StringBuilder();
-        for (String str : list) {
-            result.append(str);
+        for (String part : parts) {
+            result.append(part);
         }
+
         return result.toString();
     }
 }
