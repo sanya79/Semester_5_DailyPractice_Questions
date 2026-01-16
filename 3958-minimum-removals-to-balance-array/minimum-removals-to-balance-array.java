@@ -3,14 +3,14 @@ class Solution {
         int n = nums.length;
         Arrays.sort(nums);
 
-        int left = 0;
+        int j = 0;
         int maxWindow = 1;
 
-        for (int right = 0; right < n; right++) {
-            while ((long) nums[right] > (long) nums[left] * k) {
-                left++;
+        for (int i = 0; i < n; i++) {
+            while ((long) nums[i] > (long) nums[j] * k) {
+                j++;
             }
-            maxWindow = Math.max(maxWindow, right - left + 1);
+            maxWindow = Math.max(maxWindow, i - j + 1);
         }
         return n - maxWindow;
     }
