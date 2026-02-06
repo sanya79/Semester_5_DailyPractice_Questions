@@ -2,7 +2,6 @@ class Solution {
     public int minRemoval(int[] nums, int k) {
         int n = nums.length;
         Arrays.sort(nums);
-
         int j = 0;
         int maxWindow = 1;
 
