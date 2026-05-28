@@ -3,42 +3,42 @@ class Solution {
     static class TrieNode {
         TrieNode[] ch = new TrieNode[26];
         int b = -1;
-        int bestLength = Integer.MAX_VALUE;
+        int be = Integer.MAX_VALUE;
     }
     TrieNode root = new TrieNode();
-    public int[] stringIndices(String[] wordsContainer, String[] wordsQuery) {
-        for (int i = 0; i < wordsContainer.length; i++) {
-            insert(wordsContainer[i], i);
+    public int[] stringIndices(String[] wC, String[] w) {
+        for (int i = 0; i < wC.length; i++) {
+            insert(wC[i], i);
         }
-        int[] ans = new int[wordsQuery.length];
-        for (int i = 0; i < wordsQuery.length; i++) {
-            ans[i] = search(wordsQuery[i]);
+        int[] ans = new int[w.length];
+        for (int i = 0; i < w.length; i++) {
+            ans[i] = search(w[i]);
         }
         return ans;
     }
-    private void insert(String word, int index) {
+    private void insert(String word, int idx) {
         TrieNode node = root;
-        updateBest(node, word.length(), index);
+        updateBest(node, word.length(), idx);
         for (int i = word.length() - 1; i >= 0; i--) {
             int c = word.charAt(i) - 'a';
             if (node.ch[c] == null) {
                 node.ch[c] = new TrieNode();
             }
             node = node.ch[c];
-            updateBest(node, word.length(), index);
+            updateBest(node, word.length(), idx);
         }
     }
-    private void updateBest(TrieNode node, int length, int index) {
-        if (length < node.bestLength ||
-            (length == node.bestLength && index < node.b)) {
-            node.bestLength = length;
-            node.b = index;
+    private void updateBest(TrieNode node, int len, int idx) {
+        if (len < node.be ||
+            (len == node.be && idx < node.b)) {
+            node.be = len;
+            node.b = idx;
         }
     }
-    private int search(String query) {
+    private int search(String q) {
         TrieNode node = root;
-        for (int i = query.length() - 1; i >= 0; i--) {
-            int c = query.charAt(i) - 'a';
+        for (int i = q.length() - 1; i >= 0; i--) {
+            int c = q.charAt(i) - 'a';
             if (node.ch[c] == null) {
                 break;
             }
