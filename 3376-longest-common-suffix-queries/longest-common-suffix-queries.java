@@ -1,8 +1,8 @@
 import java.util.*;
 class Solution {
     static class TrieNode {
-        TrieNode[] children = new TrieNode[26];
-        int bestIndex = -1;
+        TrieNode[] ch = new TrieNode[26];
+        int b = -1;
         int bestLength = Integer.MAX_VALUE;
     }
     TrieNode root = new TrieNode();
@@ -21,29 +21,29 @@ class Solution {
         updateBest(node, word.length(), index);
         for (int i = word.length() - 1; i >= 0; i--) {
             int c = word.charAt(i) - 'a';
-            if (node.children[c] == null) {
-                node.children[c] = new TrieNode();
+            if (node.ch[c] == null) {
+                node.ch[c] = new TrieNode();
             }
-            node = node.children[c];
+            node = node.ch[c];
             updateBest(node, word.length(), index);
         }
     }
     private void updateBest(TrieNode node, int length, int index) {
         if (length < node.bestLength ||
-            (length == node.bestLength && index < node.bestIndex)) {
+            (length == node.bestLength && index < node.b)) {
             node.bestLength = length;
-            node.bestIndex = index;
+            node.b = index;
         }
     }
     private int search(String query) {
         TrieNode node = root;
         for (int i = query.length() - 1; i >= 0; i--) {
             int c = query.charAt(i) - 'a';
-            if (node.children[c] == null) {
+            if (node.ch[c] == null) {
                 break;
             }
-            node = node.children[c];
+            node = node.ch[c];
         }
-        return node.bestIndex;
+        return node.b;
     }
 }
